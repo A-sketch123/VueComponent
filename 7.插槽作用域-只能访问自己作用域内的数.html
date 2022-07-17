@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+     <!-- 用的是父组件的 isShow: true（在这里是new Vue的data值的里，故子组件会显示-->
+     <cpn v-show="isShow"></cpn>
+</div>
+    <script>
+      const app = new Vue({
+        el: '#app',
+        data: {
+          isShow: true,
+        },
+        components: {
+          cpn: {
+            template: `
+            <div>
+               <h4>我是子组件</h4>
+               <p v-show="isShow">我用的是子组件的isShow: false，不会显示出来</p>
+            </div>
+        `,
+            data() {
+              return {
+                isShow: false,
+          }
+        }
+      }
+    }
+  })
+</script>
+
+
+</body>
+</html>

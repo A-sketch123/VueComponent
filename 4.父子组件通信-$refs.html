@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <cpn ref="child1"></cpn>
+      <cpn ref="child2"></cpn>
+      <button @click="btnClick">通过res访问子组件</button>
+    </div>
+
+    <script>
+      const app = new Vue({
+        el: '#app',
+        methods: {
+          btnClick() {
+            //通过ref访问子组件的数据
+            console.log(this.$refs.child1.name);
+            //父组件通过调用子组件sonfocus的方法实现使父级组件可以聚焦子组件里的输入框
+            this.$refs.child2.sonfocus();
+          },
+        },
+        components: {
+          cpn: {
+            template: ` 
+        <div>我是子组件
+        <input ref="ipt">
+        </div>`,
+            data() {
+              return {
+                name: '我是子组件child1的name',
+              };
+            },
+            methods: {
+              sonfocus() {
+                // 子组件也可以使用ref访问自己内部的指定元素
+                this.$refs.ipt.focus();
+              },
+            },
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

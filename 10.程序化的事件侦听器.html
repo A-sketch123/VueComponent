@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Programmatic Event Listeners using Pikaday</title>
+    <script src="https://unpkg.com/pikaday@1.7.0"></script>
+    <script src="https://unpkg.com/vue@2"></script>
+  </head>
+  <body>
+    <div id="app">
+      <input ref="startDateInput" v-model="date" type="date" />
+      <input ref="endDateInput" />
+    </div>
+
+    <script>
+      new Vue({
+        el: '#app',
+        mounted: function () {
+          // var picker = new Pikaday({
+          //   field: this.$refs.dateInput,
+          //   format: "YYYY-MM-DD"
+          // });
+
+          // this.$once("hook:beforeDestroy", function() {
+          //   picker.destroy();
+          // });
+          //   让多个输入框元素同时使用不同的 Pikaday，每个新的实例都程序化地在后期清理它自己
+          this.attachDatepicker('startDateInput');
+          this.attachDatepicker('endDateInput');
+        },
+        methods: {
+          attachDatepicker(refName) {
+            var picker = new Pikaday({
+              field: this.$refs[refName],
+              format: 'YYYY-MM-DD',
+            });
+            //组件销毁前也销毁第三方库的日期选择器
+            this.$once('hook:beforeDestroy', function () {
+              picker.destroy();
+            });
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

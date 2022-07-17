@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="demo">
+      <son-cpn :names="name"  :father-title="title"></son-cpn>
+    </div>
+
+    <template id="cpn">
+      <div>
+        <h4>{{mes}}</h4>
+        <p>{{fatherTitle}}</p>
+        <ul>
+          <li v-for="item in names">{{item}}</li>
+        </ul>
+      </div>
+    </template>
+    <script>
+      // props使用对象方式
+      var sonCpn = {
+        template: '#cpn',
+        // 使用字符串数组
+        //props:['fatherTitle','names'],
+        
+        props: {
+          mes: {
+            type: String,
+            default: '没有传值给我，我是默认值',
+          },
+          names: {
+            type: Array,
+            //// 类型是对象或者数组时, 默认值必须是一个函数
+            default() {
+              return ['张三', '李四', 'F'];
+            },
+            //必传值
+            required: true,
+          },
+          fatherTitle:{}
+        },
+      };
+      const demo = new Vue({
+        el: '#demo',
+        data: {
+          name: ['A', 'B', 'C'],
+          title:'我是父组件传给子组件的title'
+        },
+        components: {
+          'son-cpn': sonCpn,
+        },
+      });
+    </script>
+  </body>
+</html>

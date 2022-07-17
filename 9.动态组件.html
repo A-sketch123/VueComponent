@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dynamic Components Example</title>
+    <script src="https://unpkg.com/vue@2"></script>
+    <style>
+      .tab-button {
+        padding: 6px 10px;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        background: #f0f0f0;
+        margin-bottom: -1px;
+        margin-right: -1px;
+      }
+      .tab-button:hover {
+        background: #ccc;
+      }
+      .tab-button.active {
+        background: gray;
+      }
+      .tab {
+        border: 1px solid #ccc;
+        padding: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <!-- 通过点击事件将当前点击的组件名赋值给currentTab -->
+      <button
+        v-for="item in tabs"
+        :key="item.cpn"
+        :class="['tab-button', { active: currentTab === item.cpn }]"
+        @click="currentTab = item.cpn"
+      >
+        {{ item.value }}
+      </button>
+      <!-- is绑定currentName，即显示currentName的组件 -->
+      <keep-alive>
+        <component :is="currentName" class="tab"></component>
+      </keep-alive>
+
+      <p></p>
+      
+      <!-- 多个子组件在 keep-alive里若不加条件则默认显示第一个子组件-->
+      <keep-alive>
+        <one v-if="currentTab == 'one'"></one>  
+         <two v-else-if ="currentTab == 'two'" ></two>
+        <three v-else></three>
+      </keep-alive>
+    </div>
+    <script>
+      const one = {
+        template: '<div>标签页1<input type="text"></div>',
+      };
+      const two = {
+        template: '<div>标签页2<input type="text"></div>',
+      };
+      const three = {
+        template: '<div>标签页3<input type="text"></div>',
+      };
+      new Vue({
+        el: '#app',
+        data: {
+          currentTab: 'one',
+          tabs: [
+            {
+              cpn: 'one',
+              value: '标签1',
+            },
+            {
+              cpn: 'two',
+              value: '标签2',
+            },
+            {
+              cpn: 'three',
+              value: '标签3',
+            },
+          ],
+        },
+        components: {
+          one,
+          two,
+          three,
+        },
+        computed: {
+          currentName() {
+            // 返回当前组件名currentTab
+            return this.currentTab;
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <demo></demo>
+      <demo>
+        <div>我传入了内容，会替换插槽的默认内容</div>
+      </demo>
+    </div>
+    <script>
+      Vue.component('demo', {
+        template: `
+    <div>
+      <slot><h3>我是插槽，没传值时是默认内容</h3></slot>
+    </div>
+  `,
+      });
+
+      const app = new Vue({
+        el: '#app',
+      });
+    </script>
+  </body>
+</html>

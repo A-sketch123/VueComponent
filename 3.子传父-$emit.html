@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="demo">
+        <!-- 父组件监听自定义事件 -->
+        <son-cpn @btn-click = 'sonclick'></son-cpn>
+        <h4>点击次数：{{total}}</h4>
+    </div>   
+
+    <script>
+        var cpn = {
+            template:` <button @click="btnClick()">+</button> `,
+            data(){
+                return {
+                    count :0
+                }
+            },
+            methods:{
+                btnClick(){
+                    this.count++
+                    //子组件发送自定义事件
+                    this.$emit('btn-click',this.count )
+                }
+            }
+
+        }
+        const demo = new Vue({
+            el:'#demo',
+            data:{
+                total:0
+            },
+            components:{
+                'son-cpn':cpn
+            },
+            methods: {
+                sonclick(count){
+                    this.total = count
+                }
+            },
+        })
+    </script>
+</body>
+</html>

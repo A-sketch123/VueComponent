@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <cpn></cpn>
+      <p></p>
+      <!-- Vue 2.6.0之前版本 -->
+      <!-- <cpn><span slot="center">替换了中间</span></cpn>
+      <cpn>
+        <template slot="left">
+          <button>点击返回</button>
+        </template>
+      </cpn> -->
+
+      <!-- Vue 2.6.0之后使用语法 -->
+      <cpn>
+        <template v-slot:center>
+          <span>替换了中间</span>
+        </template>
+      </cpn>
+      <cpn>
+        <template #left>
+          <button>点击返回</button>
+        </template>
+      </cpn>
+    </div>
+
+    <template id="cpn">
+      <div>
+        <slot name="left"><span>左边</span></slot>
+        <slot name="center"><span>中间</span></slot>
+        <slot name="right"><span>右边</span></slot>
+      </div>
+    </template>
+    <!-- 
+    <script src="../js/vue.js"></script> -->
+    <script>
+      const app = new Vue({
+        el: '#app',
+        components: {
+          cpn: {
+            template: '#cpn',
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
